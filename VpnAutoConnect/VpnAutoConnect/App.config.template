@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+  </startup>
+  <appSettings>
+    <add key="LabelId1" value="コード１"/>
+    <add key="LabelId2" value="コード２"/>
+    <add key="LabelCustomCommandButton" value="カスタム"/>
+
+    <add key="PassLogicUrl" value="https://XXXXX.co.jp/passlogic/ui/keyreq.php?id={ID}%40YYYY.ZZZZ.net&amp;kn=9999"/>
+    <add key="AnyConnectCliPath" value="C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpncli.exe"/>
+    <add key="CustomCommand" value="C:\Program Files (x86)\VMware\VMware Horizon View Client\vmware-view.exe"/>
+    <add key="CustomCommandParameters" value="--serverURL XXX.YYY.com --password {ID2} --userName {ID1}@YYYY.ZZZZ.net --desktopName 仮想デスクトップ"/>
+  </appSettings>
+</configuration>
