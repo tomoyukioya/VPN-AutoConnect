@@ -37,6 +37,7 @@
             this.idBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.customCommandButton = new System.Windows.Forms.Button();
+            this.checkBoxRepeatCustomCommand = new System.Windows.Forms.CheckBox();
             this.messageBox = new VpnAutoConnect.BlinkMessageBox();
             this.passLogicControl = new VpnAutoConnect.PassLogicControl();
             ((System.ComponentModel.ISupportInitialize)(this.passLogicControl)).BeginInit();
@@ -49,7 +50,7 @@
             this.buttonConfig.Location = new System.Drawing.Point(355, 12);
             this.buttonConfig.Name = "buttonConfig";
             this.buttonConfig.Size = new System.Drawing.Size(27, 23);
-            this.buttonConfig.TabIndex = 1;
+            this.buttonConfig.TabIndex = 2;
             this.buttonConfig.UseVisualStyleBackColor = true;
             this.buttonConfig.Click += new System.EventHandler(this.buttonConfig_Click);
             // 
@@ -58,7 +59,7 @@
             this.buttonConnect.Location = new System.Drawing.Point(282, 260);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(100, 23);
-            this.buttonConnect.TabIndex = 2;
+            this.buttonConnect.TabIndex = 7;
             this.buttonConnect.Text = "VPN接続";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
@@ -68,7 +69,7 @@
             this.registerPassPhraseButton.Location = new System.Drawing.Point(12, 12);
             this.registerPassPhraseButton.Name = "registerPassPhraseButton";
             this.registerPassPhraseButton.Size = new System.Drawing.Size(109, 23);
-            this.registerPassPhraseButton.TabIndex = 5;
+            this.registerPassPhraseButton.TabIndex = 0;
             this.registerPassPhraseButton.Text = "パスフレーズ登録";
             this.registerPassPhraseButton.UseVisualStyleBackColor = true;
             this.registerPassPhraseButton.Click += new System.EventHandler(this.registerPassPhraseButton_Click);
@@ -79,7 +80,7 @@
             this.label1.Location = new System.Drawing.Point(67, 212);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(22, 12);
-            this.label1.TabIndex = 7;
+            this.label1.TabIndex = 3;
             this.label1.Text = "ID1";
             // 
             // idBox1
@@ -87,14 +88,14 @@
             this.idBox1.Location = new System.Drawing.Point(155, 209);
             this.idBox1.Name = "idBox1";
             this.idBox1.Size = new System.Drawing.Size(111, 19);
-            this.idBox1.TabIndex = 8;
+            this.idBox1.TabIndex = 4;
             // 
             // buttonLog
             // 
             this.buttonLog.Location = new System.Drawing.Point(296, 12);
             this.buttonLog.Name = "buttonLog";
             this.buttonLog.Size = new System.Drawing.Size(53, 23);
-            this.buttonLog.TabIndex = 9;
+            this.buttonLog.TabIndex = 1;
             this.buttonLog.Text = "Log";
             this.buttonLog.UseVisualStyleBackColor = true;
             this.buttonLog.Click += new System.EventHandler(this.buttonLog_Click);
@@ -105,7 +106,7 @@
             this.idBox2.Name = "idBox2";
             this.idBox2.PasswordChar = '*';
             this.idBox2.Size = new System.Drawing.Size(111, 19);
-            this.idBox2.TabIndex = 11;
+            this.idBox2.TabIndex = 6;
             // 
             // label2
             // 
@@ -113,7 +114,7 @@
             this.label2.Location = new System.Drawing.Point(67, 237);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(22, 12);
-            this.label2.TabIndex = 10;
+            this.label2.TabIndex = 5;
             this.label2.Text = "ID2";
             // 
             // customCommandButton
@@ -121,10 +122,22 @@
             this.customCommandButton.Location = new System.Drawing.Point(282, 207);
             this.customCommandButton.Name = "customCommandButton";
             this.customCommandButton.Size = new System.Drawing.Size(100, 23);
-            this.customCommandButton.TabIndex = 12;
+            this.customCommandButton.TabIndex = 9;
             this.customCommandButton.Text = "カスタムコマンド";
             this.customCommandButton.UseVisualStyleBackColor = true;
             this.customCommandButton.Click += new System.EventHandler(this.customCommandButton_Click);
+            // 
+            // checkBoxRepeatCustomCommand
+            // 
+            this.checkBoxRepeatCustomCommand.AutoSize = true;
+            this.checkBoxRepeatCustomCommand.Checked = true;
+            this.checkBoxRepeatCustomCommand.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxRepeatCustomCommand.Location = new System.Drawing.Point(282, 236);
+            this.checkBoxRepeatCustomCommand.Name = "checkBoxRepeatCustomCommand";
+            this.checkBoxRepeatCustomCommand.Size = new System.Drawing.Size(65, 16);
+            this.checkBoxRepeatCustomCommand.TabIndex = 8;
+            this.checkBoxRepeatCustomCommand.Text = "繰り返し";
+            this.checkBoxRepeatCustomCommand.UseVisualStyleBackColor = true;
             // 
             // messageBox
             // 
@@ -133,7 +146,8 @@
             this.messageBox.Name = "messageBox";
             this.messageBox.ReadOnly = true;
             this.messageBox.Size = new System.Drawing.Size(254, 19);
-            this.messageBox.TabIndex = 6;
+            this.messageBox.TabIndex = 10;
+            this.messageBox.TabStop = false;
             // 
             // passLogicControl
             // 
@@ -148,6 +162,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(395, 294);
+            this.Controls.Add(this.checkBoxRepeatCustomCommand);
             this.Controls.Add(this.customCommandButton);
             this.Controls.Add(this.idBox2);
             this.Controls.Add(this.label2);
@@ -182,6 +197,7 @@
         private System.Windows.Forms.TextBox idBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button customCommandButton;
+        private System.Windows.Forms.CheckBox checkBoxRepeatCustomCommand;
     }
 }
 

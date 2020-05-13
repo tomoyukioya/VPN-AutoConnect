@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AngleSharp.Html.Dom;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -244,7 +245,7 @@ namespace VpnAutoConnect
                     buttonConnect.Enabled = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"VPN接続中に予期せぬエラーが発生しました：{ex.Message}", "エラー", MessageBoxButtons.OK);
             }
@@ -368,8 +369,20 @@ namespace VpnAutoConnect
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void customCommandButton_Click(object sender, EventArgs e)
+        private async void customCommandButton_Click(object sender, EventArgs e)
         {
+            // カスタムコマンドキャンセル
+            if (_custumCommandExecuting)
+            {
+                _custumCommandCancel = true;
+                customCommandButton.Text = ConfigurationManager.AppSettings["LabelCustomCommandButton"];
+                checkBoxRepeatCustomCommand.Enabled = true;
+                return;
+            }
+
+            // カスタムコマンド実行
+            _custumCommandCancel = false;
+
             // AnyConnectCliPath
             if (!File.Exists(_settings.CustomCommand))
             {
@@ -389,14 +402,53 @@ namespace VpnAutoConnect
                 return;
             }
 
-            // コマンド起動(立ち上げっぱなしで特に回収はしない)
-            var psi = new ProcessStartInfo(_settings.CustomCommand);
-            psi.UseShellExecute = true;
-            psi.CreateNoWindow = true;
-            psi.Arguments = _settings.CustomCommandParameters(idBox1.Text, idBox2.Text);
+            // カスタムコマンドのプロセス名
+            var processName = Path.GetFileNameWithoutExtension(_settings.CustomCommand);
 
-            var child = Process.Start(psi);
+            try
+            {
+                _custumCommandExecuting = true;
+
+                // GUI無効化
+                customCommandButton.Text = "キャンセル";
+                checkBoxRepeatCustomCommand.Enabled = false;
+
+
+                while (!_custumCommandCancel)
+                {
+
+                    // コマンド起動
+                    var psi = new ProcessStartInfo(_settings.CustomCommand);
+                    psi.UseShellExecute = true;
+                    psi.CreateNoWindow = true;
+                    psi.Arguments = _settings.CustomCommandParameters(idBox1.Text, idBox2.Text);
+
+                    OnDebugMessage($"{processName}起動");
+                    var child = Process.Start(psi);
+
+                    // 繰り返し設定なければ立ち上げっぱなしで終了
+                    if (!checkBoxRepeatCustomCommand.Checked) break;
+
+                    // 立ち上がった確認
+                    await Task.Delay(5000);
+                    if (Process.GetProcessesByName(processName).Count() > 0)
+                    {
+                        OnDebugMessage($"{processName}起動確認");
+                        break;
+                    }
+                    OnDebugMessage($"{processName}起動失敗");
+                }
+            }
+            finally
+            {
+                _custumCommandExecuting = false;
+                customCommandButton.Text = ConfigurationManager.AppSettings["LabelCustomCommandButton"];
+                checkBoxRepeatCustomCommand.Enabled = true;
+            }
+
         }
+        private bool _custumCommandExecuting { get; set; }
+        private bool _custumCommandCancel { get; set; }
 
         #endregion
     }

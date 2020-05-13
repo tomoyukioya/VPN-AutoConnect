@@ -4,8 +4,7 @@
 [CISCO AnyConnect](https://www.cisco.com/c/ja_jp/products/security/anyconnect-secure-mobility-client/index.html)
 を組み合わせたVPN接続先への自動ログインツールです。
 
-![image](https://user-images.githubusercontent.com/25922944/81464880-5f9cfa80-9200-11ea-9d1f-832c902ab9fb.png)
-
+![image](https://user-images.githubusercontent.com/25922944/81798369-edebe600-954a-11ea-967c-91fcbdec88e9.png)
 ## 機能
 1. トークンレス・ワンタイムパスワードの自動取得
 * あらかじめパターンを入力しておくことで、PassLogicのWebサイトからのテーブル取得と
@@ -29,6 +28,9 @@
 * カスタムコマンドには、2つのカスタムIDフィールドを埋め込むことができます。
 セキュリティに配慮し、カスタムID値は設定ファイルに記載せず、本ツールを立ち上げる際に一度だけ入力を促し、
 ツール終了後は破棄されます。
+* カスタムコマンドが、異常終了時（接続先仮想デスクトップがビジーなど）直ちに終了する作りになっている
+場合（Vmware Horizon Clientなど）、カスタムコマンドが立ち上がるまで繰り返し自動的にコマンド発行を
+繰り返す機能があります。
 
 5. GUIカスタマイズ機能
 * カスタムIDを入力するフィールドラベル及び、カスタムコマンドボタンの表示をカスタマイズすることができます。
@@ -36,7 +38,7 @@
 
 ## インストール
 * [Binaryパッケージ](https://github.com/tomoyukioya/VPN-AutoConnect/releases)を取得した場合は、
-適当なフォルダを展開し、「VpnAutoConnect.exe」を起動してください。
+適当なフォルダに解凍し、「VpnAutoConnect.exe」を起動してください。
 * ソースからビルドを行う場合は、「App.config.template」を「App.config」にコピーしてから、
 Visual Studio 2019でビルドを行ってください。
 
@@ -97,3 +99,7 @@ PassLogicトークンレス・ワンタイムパスワードのパネルを順�
 ## 注意
 * 自動VPN接続に先立ち、本ツールはui版のAnyConnect(vpnui.exe)を終了させます。 再度ui版のVPN接続を行う場合は、
 手動でvpnui.exeを起動してください。
+* 本ツールは.NET Framework 4.7.2に依存しています。Binaryパッケージが実行できない場合は、
+[Microsoft .NET Framework 4.7.2](https://support.microsoft.com/ja-jp/help/4054531/microsoft-net-framework-4-7-2-web-installer-for-windows)
+をインストールしてください。
+ 
