@@ -182,8 +182,16 @@ namespace VpnAutoConnect
                     {
                         // 証明書の警告が出たら「y」を入力して再びUsername待ち
                         await child.StandardInput.WriteLineAsync($"y");
-                        await rtRead.WaitFor(new string[] { @"Username: \[.*\] ", "error: " }, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(30));
+                        await rtRead.WaitFor(new string[] { @"Username: \[.*\] ", "error: ", @"Always trust this server and import the certificate\? \[y/n\]: " }, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(30));
                         str = rtRead.Read();
+
+                        // さらに証明書のエラーなら、「y」を入力して再びUsername待ち
+                        if (str.Contains(@"Always trust this server and import the certificate? [y/n]: "))
+                        {
+                            await child.StandardInput.WriteLineAsync($"y");
+                            await rtRead.WaitFor(new string[] { @"Username: \[.*\] ", "error: "}, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(30));
+                            str = rtRead.Read();
+                        }
                     }
                     if (str.Contains("error: "))
                         throw new Exception($"「Username: [] 」プロンプト待機中にエラーが発生しました。{str}");
