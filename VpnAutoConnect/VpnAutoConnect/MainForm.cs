@@ -433,10 +433,30 @@ namespace VpnAutoConnect
                     await Task.Delay(5000);
                     if (Process.GetProcessesByName(processName).Count() > 0)
                     {
-                        OnDebugMessage($"{processName}起動確認");
-                        break;
+                        OnDebugMessage($"{processName}起動確認...継続監視");
+
+                        // 念のため、1分間監視
+                        var success = true;
+                        for (int i=0;i<60;i++)
+                        {
+                            await Task.Delay(1000);
+                            if (Process.GetProcessesByName(processName).Count() == 0)
+                            {
+                                success = false;
+                                OnDebugMessage($"{processName}起動確認失敗");
+                                break;
+                            }
+                        }
+                        if(success)
+                        {
+                            OnDebugMessage($"{processName}起動成功");
+                            break;
+                        }
                     }
-                    OnDebugMessage($"{processName}起動失敗");
+                    else
+                    {
+                        OnDebugMessage($"{processName}起動失敗");
+                    }
                 }
             }
             finally
