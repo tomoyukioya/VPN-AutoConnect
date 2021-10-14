@@ -175,8 +175,16 @@ namespace VpnAutoConnect
                     OnDebugMessage($"connect {host}");
 
                     // Username待ち
-                    await rtRead.WaitFor(new string[] { @"Username: \[.*\] ", @"error: ", @"Connect Anyway\? \[y/n\]: " }, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(30));
+                    await rtRead.WaitFor(new string[] {@"Group: \[.*\] ",  @"Username: \[.*\] ", @"error: ", @"Connect Anyway\? \[y/n\]: " }, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(30));
                     str = rtRead.Read();
+
+                    if (str.Contains("Group: "))
+                    {
+                        // vpnモード選択が出たら、改行を入力して再びUsername待ち
+                        await child.StandardInput.WriteLineAsync($"");
+                        await rtRead.WaitFor(new string[] { @"Username: \[.*\] ", "error: " }, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(30));
+                        str = rtRead.Read();
+                    }
 
                     if (str.Contains("Connect Anyway? [y/n]: "))
                     {
